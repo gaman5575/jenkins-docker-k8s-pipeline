@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     // Replace the image tag in deployment.yaml with the specified DOCKER_TAG
-                    sh "sed -i 's|image:.*|image: docker.io/aryansr/python-jenkins-app:${params.DOCKER_TAG}|g' deployment.yaml"
+                    sh "sed -i 's|image:.*|image: docker.io/gaman5575/python-jenkins-app:${params.DOCKER_TAG}|g' deployment.yaml"
                 }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     // Retrieve kubeconfig secret from Jenkins credentials
-                    withKubeConfig([credentialsId: 'kubernetes-config', serverUrl: 'https://networknuts-dns-82a419qb.hcp.centralindia.azmk8s.io']) {
+                    withKubeConfig([credentialsId: 'k8s-config', serverUrl: 'https://10.0.0.100:6443']) {
                         // Authenticate with Kubernetes cluster
                         sh 'kubectl apply -f deployment.yaml'
                     }
